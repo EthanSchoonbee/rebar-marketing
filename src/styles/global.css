@@ -133,7 +133,7 @@ a {
   padding: 0 clamp(1.25rem, 4vw, 4rem);
   background:
     linear-gradient(rgba(12, 10, 9, 0.28), rgba(12, 10, 9, 0.42)),
-    url("/hero-banner.jpeg")
+    url("/hero-banner.png")
       center center / cover;
   background-attachment: fixed;
 }
