@@ -130,10 +130,10 @@ a {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0 clamp(1.25rem, 4vw, 4rem);
+  padding: 0 clamp(2rem, 5vw, 6rem);
   background:
     linear-gradient(rgba(12, 10, 9, 0.28), rgba(12, 10, 9, 0.42)),
-    url("/hero-banner.png")
+    url("/hero-banner.jpeg")
       center center / cover;
   background-attachment: fixed;
 }
@@ -145,9 +145,23 @@ a {
   grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
   gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
-  padding: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 0 clamp(1rem, 2vw, 2rem);
   background: transparent;
+}
+
+.hero-panel > :first-child {
+  position: relative;
+  padding-bottom: 1.25rem;
+}
+
+.hero-panel > :first-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(100%, 520px);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .eyebrow {
@@ -644,13 +658,21 @@ h3 {
   }
 
   .hero {
-    padding: 0.5rem 0 4rem;
+    padding: 0.5rem 1rem 4rem;
     background-attachment: scroll;
   }
 
   .hero-panel {
     padding: 0 0 1rem;
     gap: 1.2rem;
+  }
+
+  .hero-panel > :first-child {
+    padding-bottom: 1rem;
+  }
+
+  .hero-panel > :first-child::after {
+    width: min(100%, 68vw);
   }
 
   h1 {
