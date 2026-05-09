@@ -144,7 +144,7 @@ export default function HomePage() {
 
         <section className="contact-section dark-section" id="contact">
           <div className="contact-background" aria-hidden="true" />
-          <Reveal className="contact-grid">
+          <Reveal className="section-shell contact-grid">
             <div>
               <SectionLabel>Contact Rebar</SectionLabel>
               <h2>Every scope, every signal, one clear path.</h2>

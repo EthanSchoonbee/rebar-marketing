@@ -440,7 +440,7 @@ h3 {
     position: absolute;
     inset: 0;
     background: linear-gradient(rgba(36, 31, 28, 0.28), rgba(36, 31, 28, 0.42)),
-    url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1800&q=80") center center / cover;
+    url("/contact-background.png") center center / cover;
     background-attachment: fixed;
     z-index: 0;
     opacity: 1;
@@ -453,8 +453,8 @@ h3 {
     align-items: start;
     position: relative;
     z-index: 1;
-    width: min(var(--content-width), 100%);
-    margin-inline: auto;
+    width: 100%;
+    padding-inline: clamp(0.5rem, 2vw, 1.5rem);
 }
 
 .contact-grid h2 {
