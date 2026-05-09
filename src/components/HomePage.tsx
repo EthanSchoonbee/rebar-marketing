@@ -1,6 +1,5 @@
 import Button from "./Button";
 import Header from "./Header";
-import InsightCard from "./InsightCard";
 import MetricBlock from "./MetricBlock";
 import Reveal from "./Reveal";
 import SectionLabel from "./SectionLabel";
@@ -41,11 +40,10 @@ export default function HomePage() {
     <>
       <Header />
       <main id="home">
-        <section className="hero section-shell">
-          <div className="hero-media" aria-label="Construction site structure at dusk" />
+        <section className="hero">
           <Reveal className="hero-panel">
             <div>
-              <SectionLabel>Built for the work behind the work.</SectionLabel>
+              <SectionLabel>Construction clarity, always in view.</SectionLabel>
               <h1>Construction management, made clear.</h1>
             </div>
             <div className="hero-copy">
@@ -75,7 +73,8 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section className="split-section section-shell" id="approach">
+        <section className="split-section" id="approach">
+          <div className="split-background" aria-hidden="true" />
           <Reveal className="split-copy">
             <SectionLabel>One operating picture.</SectionLabel>
             <h2>Fewer handoffs. Faster answers. Better control.</h2>
@@ -89,13 +88,6 @@ export default function HomePage() {
             <Button href="#platform" variant="ghost">
               See the platform
             </Button>
-          </Reveal>
-          <Reveal className="about-image-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=80"
-              alt="Architectural plans and construction materials on a work surface"
-              loading="lazy"
-            />
           </Reveal>
         </section>
 
@@ -133,23 +125,27 @@ export default function HomePage() {
               Talk to Rebar
             </Button>
           </Reveal>
-          <Reveal>
-            <InsightCard />
+          <Reveal className="insight-stack">
+            <article className="insight-minimal">
+              <p className="eyebrow">Field note</p>
+              <h3>Why the best project meetings start before the meeting.</h3>
+              <p>
+                A practical look at turning field updates, cost movement, and open decisions into
+                executive-ready clarity.
+              </p>
+              <a href="#contact">Read article</a>
+            </article>
           </Reveal>
         </section>
 
         <section className="contact-section dark-section" id="contact">
-          <Reveal className="section-shell contact-grid">
+          <div className="contact-background" aria-hidden="true" />
+          <Reveal className="contact-grid">
             <div>
               <SectionLabel>Contact Rebar</SectionLabel>
               <h2>Every scope, every signal, one clear path.</h2>
               <Button href="mailto:hello@rebar.build">Contact us</Button>
             </div>
-            <img
-              src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80"
-              alt="Construction cranes and structural frame on an active build site"
-              loading="lazy"
-            />
           </Reveal>
         </section>
       </main>
