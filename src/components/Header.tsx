@@ -33,11 +33,23 @@ export default function Header() {
         type="button"
         aria-controls="mobile-menu"
         aria-expanded={isOpen}
+        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
         onClick={() => setIsOpen((value) => !value)}
       >
         <span>{isOpen ? "Close" : "Menu"}</span>
       </button>
       <div className={`mobile-menu ${isOpen ? "is-open" : ""}`} id="mobile-menu">
+        <div className="mobile-menu__top">
+          <span className="mobile-menu__label">Navigation</span>
+          <button
+            className="mobile-menu__close"
+            type="button"
+            aria-label="Close navigation menu"
+            onClick={() => setIsOpen(false)}
+          >
+            Close
+          </button>
+        </div>
         <nav aria-label="Mobile navigation">
           {navItems.map((item) => (
             <a key={item.href} href={item.href} onClick={() => setIsOpen(false)}>
