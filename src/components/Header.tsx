@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 const navItems = [
   { label: "Home", href: "#home" },
   { label: "Platform", href: "#platform" },
@@ -9,15 +7,9 @@ const navItems = [
 ];
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.classList.toggle("menu-open", isOpen);
-    return () => document.body.classList.remove("menu-open");
-  }, [isOpen]);
-
   return (
     <header className="site-header">
+      <input className="mobile-menu-toggle" type="checkbox" id="mobile-menu-toggle" />
       <a className="wordmark" href="#home" aria-label="Rebar home">
         Rebar
       </a>
@@ -28,36 +20,39 @@ export default function Header() {
           </a>
         ))}
       </nav>
-      <button
-        className="menu-button"
-        type="button"
-        aria-controls="mobile-menu"
-        aria-expanded={isOpen}
-        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-        onClick={() => setIsOpen((value) => !value)}
-      >
-        <span>{isOpen ? "Close" : "Menu"}</span>
-      </button>
-      <div className={`mobile-menu ${isOpen ? "is-open" : ""}`} id="mobile-menu">
+      <label className="menu-button" htmlFor="mobile-menu-toggle">
+        <span className="menu-button__label menu-button__label--open">Menu</span>
+        <span className="menu-button__label menu-button__label--close">Close</span>
+      </label>
+      <div className="mobile-menu" id="mobile-menu">
         <div className="mobile-menu__top">
           <span className="mobile-menu__label">Navigation</span>
-          <button
-            className="mobile-menu__close"
-            type="button"
-            aria-label="Close navigation menu"
-            onClick={() => setIsOpen(false)}
-          >
+          <label className="mobile-menu__close" htmlFor="mobile-menu-toggle">
             Close
-          </button>
+          </label>
         </div>
         <nav aria-label="Mobile navigation">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setIsOpen(false)}>
+            <a key={item.href} href={item.href} data-menu-link>
               {item.label}
             </a>
           ))}
         </nav>
       </div>
+      <script
+        type="module"
+        dangerouslySetInnerHTML={{
+          __html: `
+            const toggle = document.getElementById("mobile-menu-toggle");
+            const links = document.querySelectorAll("[data-menu-link]");
+            links.forEach((link) => {
+              link.addEventListener("click", () => {
+                if (toggle) toggle.checked = false;
+              });
+            });
+          `,
+        }}
+      />
     </header>
   );
 }
