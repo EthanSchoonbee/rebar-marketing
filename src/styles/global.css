@@ -1,13 +1,11 @@
 :root {
     --color-cream: #fbfaf6;
     --color-warm-white: #ffffff;
-    --color-charcoal: #120d05;
     --color-dark-brown: #120d05;
-    --color-muted-brown: #171d2d;
-    --color-rust: #f57340;
-    --color-soft-rust: #ce7d55;
-    --color-muted-green: #b9c7a8;
-    --color-border: rgba(36, 31, 28, 0.14);
+    --color-muted-brown: #1f1509;
+    --color-rust: #F57340FF;
+    --color-soft-rust: #f58559;
+    --color-border: #1f1a13;
     --font-display: "Newsreader", Georgia, serif;
     --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
     --max-width: 1440px;
@@ -25,7 +23,7 @@
 
 html {
     background: var(--color-cream);
-    color: var(--color-charcoal);
+    color: var(--color-dark-brown);
     font-family: var(--font-body);
     scroll-behavior: smooth;
 }
@@ -33,7 +31,7 @@ html {
 body {
     margin: 0;
     background: var(--color-cream);
-    color: var(--color-charcoal);
+    color: var(--color-cream);
     font-size: 16px;
     line-height: 1.6;
 }
@@ -76,11 +74,13 @@ a {
     height: 72px;
     padding-inline: clamp(1.25rem, 4vw, 4rem);
     border-bottom: 1px solid var(--color-border);
-    background: var(--color-charcoal);
+    background: var(--color-dark-brown);
     backdrop-filter: blur(14px);
 }
 
 .wordmark {
+    display: inline-flex;
+    align-items: center;
     font-family: var(--font-display);
     font-size: 1.6rem;
     font-weight: 600;
@@ -95,6 +95,7 @@ a {
     align-items: center;
     color: var(--color-warm-white);
     font-size: 0.9rem;
+    font-family: var(--font-display);
 }
 
 .desktop-nav a,
@@ -110,6 +111,7 @@ a {
 
 .menu-button {
     display: none;
+    align-items: center;
     min-height: 42px;
     padding: 0;
     border: 0;
@@ -191,7 +193,7 @@ blockquote {
 
 h1 {
     max-width: 760px;
-    font-size: clamp(3.25rem, 8.4vw, 8.5rem);
+    font-size: clamp(2.9rem, 7.6vw, 7.5rem);
     line-height: 0.9;
     color: var(--color-warm-white);
 }
@@ -213,6 +215,7 @@ h3 {
     margin: 0 0 1.5rem;
     color: var(--color-warm-white);
     font-size: clamp(1.05rem, 1.4vw, 1.32rem);
+    font-family: var(--font-display);
     line-height: 1.48;
 }
 
@@ -313,7 +316,7 @@ h3 {
     position: absolute;
     inset: 0;
     background: linear-gradient(rgba(251, 250, 246, 0.42), rgba(251, 250, 246, 0.52)),
-    url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1800&q=80") center center / cover;
+    url("/approach-background.jpeg") center center / cover;
     background-attachment: fixed;
     z-index: 0;
     mix-blend-mode: multiply;
@@ -391,7 +394,7 @@ h3 {
 }
 
 .testimonial-section strong {
-    color: var(--color-charcoal);
+    color: var(--color-dark-brown);
 }
 
 .insights-section {
@@ -465,7 +468,7 @@ h3 {
     gap: clamp(2rem, 5vw, 5rem);
     align-items: end;
     padding: var(--space-lg) clamp(1.25rem, 4vw, 4rem);
-    background: var(--color-charcoal);
+    background: var(--color-dark-brown);
     color: var(--color-cream);
 }
 
@@ -489,11 +492,31 @@ h3 {
     opacity: 0;
     transform: translateY(18px);
     transition: opacity 700ms ease, transform 700ms ease;
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
 }
 
 .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.reveal--strong {
+    transform: translateY(36px) scale(0.975);
+    transition-duration: 900ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal--strong.is-visible {
+    transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }
 
 @media (max-width: 920px) {
@@ -549,7 +572,7 @@ h3 {
         justify-content: space-between;
         min-height: 100vh;
         padding: 1.35rem clamp(1.5rem, 5vw, 2.5rem) 2.25rem;
-        background: #ffffff;
+        background: var(--color-dark-brown);
         opacity: 0;
         pointer-events: none;
         transform: translateY(-12px);
@@ -577,11 +600,11 @@ h3 {
         gap: 1rem;
         margin-bottom: 0;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--color-border);
+        border-bottom: 1px solid var(--color-cream);
     }
 
     .mobile-menu__label {
-        color: var(--color-muted-brown);
+        color: var(--color-cream);
         font-size: 0.72rem;
         font-weight: 600;
         letter-spacing: 0.08em;
@@ -651,14 +674,18 @@ h3 {
     .site-header {
         height: 58px;
         padding-inline: 0.8rem;
-        background: var(--color-charcoal);
+        background: var(--color-dark-brown);
     }
 
     .wordmark {
+        display: inline-flex;
+        align-items: center;
         font-size: 1.35rem;
     }
 
     .menu-button {
+        display: inline-flex;
+        align-items: center;
         min-width: 0;
         min-height: 0;
         padding: 0;
@@ -704,7 +731,7 @@ h3 {
     }
 
     h1 {
-        font-size: clamp(2.55rem, 12vw, 4.1rem);
+        font-size: clamp(2.45rem, 13vw, 4rem);
         line-height: 0.94;
     }
 

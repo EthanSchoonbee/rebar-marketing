@@ -44,7 +44,7 @@ export default function HomePage() {
           <Reveal className="hero-panel">
             <div>
               <SectionLabel>Construction clarity, always in view.</SectionLabel>
-              <h1>Construction management, made clear.</h1>
+              <h1>Construction management made clear.</h1>
             </div>
             <div className="hero-copy">
               <p>
@@ -57,20 +57,24 @@ export default function HomePage() {
         </section>
 
         <section className="services-section dark-section" id="platform">
-          <Reveal className="section-shell section-grid">
+          <div className="section-shell section-grid">
             <div className="section-intro">
-              <SectionLabel>What Rebar brings together.</SectionLabel>
-              <p>
-                Sophisticated enough for complex builds. Simple enough for the daily coordination
-                that keeps work moving.
-              </p>
+              <Reveal className="reveal--strong">
+                <SectionLabel>What Rebar brings together.</SectionLabel>
+                <p>
+                  Sophisticated enough for complex builds. Simple enough for the daily
+                  coordination that keeps work moving.
+                </p>
+              </Reveal>
             </div>
             <div className="service-list">
-              {services.map((service) => (
-                <ServiceRow key={service.number} {...service} />
+              {services.map((service, index) => (
+                <Reveal key={service.number} className="reveal--strong" delayMs={index * 140}>
+                  <ServiceRow {...service} />
+                </Reveal>
               ))}
             </div>
-          </Reveal>
+          </div>
         </section>
 
         <section className="split-section" id="approach">
