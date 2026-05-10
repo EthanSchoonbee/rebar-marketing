@@ -5,23 +5,18 @@
     --color-muted-brown: #1f1509;
     --color-rust: #f58559;
     --color-soft-rust: #f58559;
-    --color-border: #1f1a13;
 
     --font-display: "Newsreader", Georgia, serif;
     --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
 
-    --max-width: 1440px;
     --content-width: 1180px;
 
-    --space-sm: 1rem;
     --space-md: 2rem;
     --space-lg: 4rem;
     --space-xl: 7rem;
     --space-xxl: 10rem;
 
     --header-height-desktop: 72px;
-    --header-height-tablet: 60px;
-    --header-height-mobile: 54px;
     --screen-height: 100svh;
     --section-height: calc(var(--screen-height) + clamp(1rem, 3vh, 2.25rem));
     --page-gutter: clamp(2rem, 5vw, 6rem);
@@ -108,13 +103,10 @@ a {
     border-radius: 999px;
     --header-brand: var(--color-rust);
     --header-nav: var(--color-white);
-    --mobile-menu-color: var(--color-white);
     transition: background-color 220ms ease,
     color 220ms ease,
     border-color 220ms ease,
     box-shadow 220ms ease,
-    backdrop-filter 220ms ease,
-    -webkit-backdrop-filter 220ms ease,
     padding-inline 220ms ease,
     height 320ms cubic-bezier(0.22, 1, 0.36, 1),
     left 320ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -488,7 +480,7 @@ body.menu-open .site-header {
     padding: 0 var(--page-gutter);
     overflow: clip;
     background: linear-gradient(rgba(12, 10, 9, 0.28), rgba(12, 10, 9, 0.42)),
-    url("/hero-banner.png") center center / cover;
+    url("/hero-banner.webp") center center / cover;
     background-attachment: fixed;
 }
 
@@ -574,7 +566,7 @@ h3 {
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
-    transition: background 180ms ease,
+    transition: background-color 180ms ease,
     color 180ms ease,
     transform 180ms ease;
 }
@@ -666,7 +658,7 @@ h3 {
     inset: 0;
     z-index: 0;
     background: linear-gradient(rgba(251, 250, 246, 0.42), rgba(251, 250, 246, 0.52)),
-    url("/approach-background.jpeg") center center / cover;
+    url("/approach-background.webp") center center / cover;
     background-attachment: fixed;
     mix-blend-mode: multiply;
 }
@@ -817,7 +809,7 @@ h3 {
     inset: 0;
     z-index: 0;
     background: linear-gradient(rgba(36, 31, 28, 0.28), rgba(36, 31, 28, 0.42)),
-    url("/contact-background.png") center center / cover;
+    url("/contact-background.webp") center center / cover;
     background-attachment: fixed;
 }
 
@@ -880,6 +872,11 @@ h3 {
 
 /* Animation */
 .reveal {
+    opacity: 1;
+    transform: none;
+}
+
+.js .reveal {
     opacity: 0;
     transform: translateY(18px);
     transition: opacity 700ms ease,
@@ -888,18 +885,18 @@ h3 {
     will-change: opacity, transform;
 }
 
-.reveal.is-visible {
+.js .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-.reveal--strong {
+.js .reveal--strong {
     transform: translateY(36px) scale(0.975);
     transition-duration: 900ms;
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.reveal--strong.is-visible {
+.js .reveal--strong.is-visible {
     transform: translateY(0) scale(1);
 }
 
@@ -966,9 +963,7 @@ h3 {
         padding: 0 1rem;
         border-radius: 28px;
         --mobile-header-top: 0.55rem;
-        --mobile-menu-inset: 0.55rem;
         --mobile-menu-height: 72px;
-        --mobile-menu-radius: 28px;
         --mobile-menu-padding: 1.1rem 1.1rem 1rem;
     }
 
@@ -977,7 +972,6 @@ h3 {
         left: 0.9rem;
         right: 0.9rem;
         --mobile-header-top: 0.75rem;
-        --mobile-menu-inset: 0.9rem;
     }
 
     .site-header.site-header--mobile-menu-open {
@@ -1130,9 +1124,7 @@ h3 {
         padding: 0 1rem;
         border-radius: 30px;
         --mobile-header-top: 0.35rem;
-        --mobile-menu-inset: 0.35rem;
         --mobile-menu-height: 62px;
-        --mobile-menu-radius: 28px;
         --mobile-menu-padding: 1.1rem 1.1rem 1rem;
     }
 
@@ -1141,7 +1133,6 @@ h3 {
         left: 0.7rem;
         right: 0.7rem;
         --mobile-header-top: 0.55rem;
-        --mobile-menu-inset: 0.7rem;
     }
 
     .site-header.is-scrolled .site-header__content {
@@ -1314,5 +1305,11 @@ h3 {
     .reveal {
         opacity: 1;
         transform: none;
+    }
+
+    .hero,
+    .split-background,
+    .contact-background {
+        background-attachment: scroll;
     }
 }

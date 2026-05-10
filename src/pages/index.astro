@@ -1,5 +1,5 @@
 ---
-import HomePage from "../components/HomePage";
+import HomePage from "../components/HomePage.astro";
 import "../styles/global.css";
 ---
 
@@ -13,6 +13,10 @@ import "../styles/global.css";
       content="Rebar is a construction management tool that brings field activity, costs, documents, and decisions into one calm operating picture."
     />
     <title>Rebar | Construction Work, Made Clear</title>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+    <link rel="preload" href="/hero-banner.webp" as="image" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,6 +25,6 @@ import "../styles/global.css";
     />
   </head>
   <body>
-    <HomePage client:load />
+    <HomePage />
   </body>
 </html>
