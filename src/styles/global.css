@@ -277,7 +277,7 @@ body.menu-open .site-header {
     transform: translateX(0) scale(1);
     pointer-events: auto;
 
-    transition-delay: 650ms, 650ms, 650ms, 0ms;
+    transition-delay: 450ms, 450ms, 450ms, 0ms;
 }
 
 .site-header.is-scrolled .desktop-nav a {
@@ -488,17 +488,17 @@ body.menu-open .site-header {
     display: grid;
     grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
     align-items: center;
-    gap: clamp(2rem, 5vw, 5rem);
+    gap: clamp(2rem, 5vw, 4rem);
     width: min(var(--content-width), 100%);
     margin-inline: auto;
     padding: 0 clamp(1rem, 2vw, 2rem);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.67);
     background: transparent;
 }
 
 .hero-panel > :first-child {
     position: static;
-    padding-bottom: 0;
+    padding-bottom: 1.5rem;
 }
 
 .hero-panel > :first-child::after {
@@ -513,6 +513,10 @@ body.menu-open .site-header {
     line-height: 1.2;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+}
+
+.hero .eyebrow span {
+    color: var(--color-rust);
 }
 
 h1,
@@ -544,7 +548,6 @@ h3 {
 
 .hero-copy p,
 .section-intro p,
-.split-detail p,
 .insights-copy p {
     margin: 0 0 1.5rem;
     color: var(--color-white);
@@ -663,8 +666,8 @@ h3 {
 }
 
 .split-background.is-background-loaded {
-    background-image: linear-gradient(rgba(251, 250, 246, 0.42), rgba(251, 250, 246, 0.52)),
-    url("/approach-background.webp");
+    background-image: linear-gradient(rgba(10, 10, 10, 0.42), rgba(17, 17, 17, 0.46)),
+    url("/approach-background.jpeg");
     background-position: center center;
     background-size: cover;
 }
@@ -688,9 +691,21 @@ h3 {
     grid-column: 1 / 8;
 }
 
+.split-copy .eyebrow {
+    color: var(--color-white);
+}
+
+.split-copy h2 {
+    color: var(--color-rust);
+}
+
 .split-detail {
     grid-column: 9 / 13;
     align-self: end;
+}
+
+.split-detail p {
+    color: var(--color-cream);
 }
 
 .metrics-section {
@@ -707,6 +722,10 @@ h3 {
     align-items: end;
     gap: clamp(2rem, 6vw, 6rem);
     margin-bottom: var(--space-lg);
+}
+
+.metrics-heading .eyebrow {
+    color: var(--color-muted-brown);
 }
 
 .metrics-grid {
@@ -732,6 +751,10 @@ h3 {
 
 .metric-block span {
     color: var(--color-muted-brown);
+}
+
+.pricing .eyebrow {
+    color: var(--color-dark-brown);
 }
 
 .testimonial-section {
@@ -770,6 +793,10 @@ h3 {
 
 .insights-copy h2 {
     margin-bottom: 1.5rem;
+}
+
+.insights-copy .eyebrow {
+    color: var(--color-dark-brown);
 }
 
 .insight-minimal h3 {
@@ -846,7 +873,7 @@ h3 {
 .site-footer {
     flex: 0 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 2fr) auto minmax(0, 0.15fr);
     align-items: end;
     gap: clamp(1.5rem, 4vw, 4rem);
     padding: clamp(2.2rem, 5vw, var(--space-lg)) clamp(1.25rem, 4vw, 4rem);
@@ -887,6 +914,7 @@ h3 {
     opacity: 1;
     transform: none;
 }
+
 
 .js .reveal {
     opacity: 0;
