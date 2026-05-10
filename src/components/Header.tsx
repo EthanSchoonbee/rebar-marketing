@@ -10,28 +10,72 @@ const navItems = [
 ];
 
 const MOBILE_NAV_WIDTH = 760;
+const DESKTOP_MENU_CLOSE_MS = 460;
+const lastNavItemIndex = navItems.length - 1;
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [headerTone, setHeaderTone] = useState("dark");
     const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
+    const [desktopMenuMounted, setDesktopMenuMounted] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const headerRef = useRef<HTMLElement | null>(null);
-    const headerStyle = scrolled ? ({
-        "--header-brand": headerTone === "light" ? "var(--color-dark-brown)" : "var(--color-white)",
-        "--header-nav": headerTone === "light" ? "var(--color-dark-brown)" : "var(--color-white)",
-    } as CSSProperties) : undefined;
+    const desktopMenuCloseTimer = useRef<number | null>(null);
+    const toneColor = headerTone === "light" ? "var(--color-dark-brown)" : "var(--color-white)";
+    const headerStyle = {
+        "--mobile-menu-color": toneColor,
+        ...(scrolled ? {
+            "--header-brand": toneColor,
+            "--header-nav": toneColor,
+        } : {}),
+    } as CSSProperties;
+
+    const clearDesktopMenuCloseTimer = () => {
+        if (desktopMenuCloseTimer.current !== null) {
+            window.clearTimeout(desktopMenuCloseTimer.current);
+            desktopMenuCloseTimer.current = null;
+        }
+    };
+
+    const openDesktopMenu = () => {
+        clearDesktopMenuCloseTimer();
+        setDesktopMenuMounted(true);
+        window.requestAnimationFrame(() => setDesktopMenuOpen(true));
+    };
+
+    const closeDesktopMenu = () => {
+        clearDesktopMenuCloseTimer();
+        setDesktopMenuOpen(false);
+        desktopMenuCloseTimer.current = window.setTimeout(() => {
+            setDesktopMenuMounted(false);
+            desktopMenuCloseTimer.current = null;
+        }, DESKTOP_MENU_CLOSE_MS);
+    };
+
+    const toggleDesktopMenu = () => {
+        if (desktopMenuOpen) {
+            closeDesktopMenu();
+        } else {
+            openDesktopMenu();
+        }
+    };
 
     useEffect(() => {
-        if (!scrolled && desktopMenuOpen) {
-            setDesktopMenuOpen(false);
+        if (!scrolled && desktopMenuMounted) {
+            closeDesktopMenu();
         }
-    }, [scrolled, desktopMenuOpen]);
+    }, [scrolled, desktopMenuMounted]);
+
+    useEffect(() => {
+        return () => {
+            clearDesktopMenuCloseTimer();
+        };
+    }, []);
 
     useEffect(() => {
         const onResize = () => {
             if (window.innerWidth <= MOBILE_NAV_WIDTH) {
-                setDesktopMenuOpen(false);
+                closeDesktopMenu();
             } else {
                 setMobileMenuOpen(false);
             }
@@ -54,7 +98,10 @@ export default function Header() {
             if (typeof window === "undefined" || !headerRef.current) return;
 
             const headerRect = headerRef.current.getBoundingClientRect();
-            const probeY = window.scrollY + headerRect.bottom + 8;
+            const wordmarkRect = headerRef.current.querySelector(".wordmark")?.getBoundingClientRect();
+            const probeY = wordmarkRect
+                ? wordmarkRect.top + wordmarkRect.height / 2
+                : headerRect.top + Math.min(headerRect.height, 72) / 2;
             const sections = Array.from(document.querySelectorAll("[data-header-tone]"));
 
             let nextTone = "dark";
@@ -62,10 +109,8 @@ export default function Header() {
             for (const section of sections) {
                 const tone = section.getAttribute("data-header-tone");
                 const rect = section.getBoundingClientRect();
-                const top = rect.top + window.scrollY;
-                const bottom = rect.bottom + window.scrollY;
 
-                if (probeY >= top && probeY < bottom) {
+                if (probeY >= rect.top && probeY < rect.bottom) {
                     nextTone = tone === "light" ? "light" : "dark";
                     break;
                 }
@@ -103,8 +148,16 @@ export default function Header() {
                 </a>
                 <div className="desktop-actions">
                     <nav className="desktop-nav" aria-label="Primary navigation">
-                        {navItems.map((item) => (
-                            <a key={item.href} href={item.href}>
+                        {navItems.map((item, index) => (
+                            <a
+                                key={item.href}
+                                href={item.href}
+                                style={{
+                                    "--nav-collapse-delay": `${(lastNavItemIndex - index) * 42}ms`,
+                                    "--nav-expand-delay": `${index * 34}ms`,
+                                    "--nav-collapse-distance": `${(lastNavItemIndex - index + 1) * 3.8}rem`,
+                                } as CSSProperties}
+                            >
                                 {item.label}
                             </a>
                         ))}
@@ -112,7 +165,7 @@ export default function Header() {
                     <button
                         type="button"
                         className={`desktop-menu-button ${desktopMenuOpen ? "is-open" : ""}`}
-                        onClick={() => setDesktopMenuOpen((current) => !current)}
+                        onClick={toggleDesktopMenu}
                         aria-label={desktopMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                         aria-expanded={desktopMenuOpen}
                     >
@@ -140,33 +193,46 @@ export default function Header() {
             </button>
             <div className="mobile-menu" id="mobile-menu" aria-hidden={!mobileMenuOpen}>
                 <nav aria-label="Mobile navigation">
-                    {navItems.map((item) => (
-                        <a key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)}>
-                            {item.label}
-                        </a>
-                    ))}
-                </nav>
-            </div>
-            <div className="desktop-menu-panel" aria-hidden={!desktopMenuOpen}>
-                <nav aria-label="Expanded desktop navigation">
                     {navItems.map((item, index) => (
                         <a
                             key={item.href}
                             href={item.href}
-                            style={{ "--menu-delay": `${index * 70}ms` } as CSSProperties}
-                            onClick={() => setDesktopMenuOpen(false)}
+                            style={{
+                                "--menu-open-delay": `${index * 70}ms`,
+                                "--menu-close-delay": `${(lastNavItemIndex - index) * 45}ms`,
+                            } as CSSProperties}
+                            onClick={() => setMobileMenuOpen(false)}
                         >
                             {item.label}
                         </a>
                     ))}
                 </nav>
             </div>
-            {desktopMenuOpen ? (
+            {desktopMenuMounted ? (
+                <div className="desktop-menu-panel" aria-hidden={!desktopMenuOpen}>
+                    <nav aria-label="Expanded desktop navigation">
+                        {navItems.map((item, index) => (
+                            <a
+                                key={item.href}
+                                href={item.href}
+                                style={{
+                                    "--menu-open-delay": `${index * 70}ms`,
+                                    "--menu-close-delay": `${(lastNavItemIndex - index) * 45}ms`,
+                                } as CSSProperties}
+                                onClick={closeDesktopMenu}
+                            >
+                                {item.label}
+                            </a>
+                        ))}
+                    </nav>
+                </div>
+            ) : null}
+            {desktopMenuMounted ? (
                 <button
                     type="button"
                     className="desktop-menu-backdrop"
                     aria-label="Close navigation menu"
-                    onClick={() => setDesktopMenuOpen(false)}
+                    onClick={closeDesktopMenu}
                 />
             ) : null}
         </header>

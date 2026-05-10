@@ -79,20 +79,22 @@ export default function HomePage() {
 
         <section className="split-section" id="approach" data-header-tone="light">
           <div className="split-background" aria-hidden="true" />
-          <Reveal className="split-copy">
-            <SectionLabel>One operating picture.</SectionLabel>
-            <h2>Fewer handoffs. Faster answers. Better control.</h2>
-          </Reveal>
-          <Reveal className="split-detail">
-            <p>
-              Construction teams do not need another place for information to disappear. Rebar
-              connects field reality with office commitments, so every open question has context,
-              ownership, and a visible path to resolution.
-            </p>
-            <Button href="#platform" variant="ghost">
-              See the platform
-            </Button>
-          </Reveal>
+          <div className="split-content section-shell">
+            <Reveal className="split-copy">
+              <SectionLabel>One operating picture.</SectionLabel>
+              <h2>Fewer handoffs. Faster answers. Better control.</h2>
+            </Reveal>
+            <Reveal className="split-detail">
+              <p>
+                Construction teams do not need another place for information to disappear. Rebar
+                connects field reality with office commitments, so every open question has context,
+                ownership, and a visible path to resolution.
+              </p>
+              <Button href="#platform" variant="ghost">
+                See the platform
+              </Button>
+            </Reveal>
+          </div>
         </section>
 
         <section className="metrics-section" id="proof" data-header-tone="light">
@@ -154,7 +156,7 @@ export default function HomePage() {
             </Reveal>
           </section>
           <footer className="site-footer">
-            <div>
+            <div className="site-footer__brand">
               <h2>Hold the whole build in view.</h2>
               <p>Rebar brings construction management into one calm operating picture.</p>
             </div>
@@ -164,7 +166,7 @@ export default function HomePage() {
               <a href="#approach">Approach</a>
               <a href="#contact">Contact</a>
             </nav>
-            <p>© 2026 Rebar</p>
+            <p className="site-footer__copyright">© 2026 Rebar</p>
           </footer>
         </div>
       </main>
