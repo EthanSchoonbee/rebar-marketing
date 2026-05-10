@@ -142,30 +142,32 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section className="contact-section dark-section" id="contact" data-header-tone="dark">
-          <div className="contact-background" aria-hidden="true" />
-          <Reveal className="section-shell contact-grid">
+        <div className="closing-screen" data-header-tone="dark">
+          <section className="contact-section dark-section" id="contact">
+            <div className="contact-background" aria-hidden="true" />
+            <Reveal className="section-shell contact-grid">
+              <div>
+                <SectionLabel>Contact Rebar</SectionLabel>
+                <h2>Every scope, every signal, one clear path.</h2>
+                <Button href="mailto:hello@rebar.build">Contact us</Button>
+              </div>
+            </Reveal>
+          </section>
+          <footer className="site-footer">
             <div>
-              <SectionLabel>Contact Rebar</SectionLabel>
-              <h2>Every scope, every signal, one clear path.</h2>
-              <Button href="mailto:hello@rebar.build">Contact us</Button>
+              <h2>Hold the whole build in view.</h2>
+              <p>Rebar brings construction management into one calm operating picture.</p>
             </div>
-          </Reveal>
-        </section>
-      </main>
-      <footer className="site-footer">
-        <div>
-          <h2>Hold the whole build in view.</h2>
-          <p>Rebar brings construction management into one calm operating picture.</p>
+            <nav aria-label="Footer navigation">
+              <a href="#home">Home</a>
+              <a href="#platform">Platform</a>
+              <a href="#approach">Approach</a>
+              <a href="#contact">Contact</a>
+            </nav>
+            <p>© 2026 Rebar</p>
+          </footer>
         </div>
-        <nav aria-label="Footer navigation">
-          <a href="#home">Home</a>
-          <a href="#platform">Platform</a>
-          <a href="#approach">Approach</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <p>© 2026 Rebar</p>
-      </footer>
+      </main>
     </>
   );
 }

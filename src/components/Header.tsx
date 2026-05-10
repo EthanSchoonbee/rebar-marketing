@@ -1,6 +1,5 @@
 import type {CSSProperties} from "react";
 import {useEffect, useRef, useState} from "react";
-import GlassSurface from "./GlassSurface.jsx";
 
 const navItems = [
     {label: "Home", href: "#home"},
@@ -10,11 +9,18 @@ const navItems = [
     {label: "Contact", href: "#contact"},
 ];
 
+const MOBILE_NAV_WIDTH = 760;
+
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [headerTone, setHeaderTone] = useState("dark");
     const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const headerRef = useRef<HTMLElement | null>(null);
+    const headerStyle = scrolled ? ({
+        "--header-brand": headerTone === "light" ? "var(--color-dark-brown)" : "var(--color-white)",
+        "--header-nav": headerTone === "light" ? "var(--color-dark-brown)" : "var(--color-white)",
+    } as CSSProperties) : undefined;
 
     useEffect(() => {
         if (!scrolled && desktopMenuOpen) {
@@ -24,14 +30,24 @@ export default function Header() {
 
     useEffect(() => {
         const onResize = () => {
-            if (window.innerWidth <= 920) {
+            if (window.innerWidth <= MOBILE_NAV_WIDTH) {
                 setDesktopMenuOpen(false);
+            } else {
+                setMobileMenuOpen(false);
             }
         };
 
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
     }, []);
+
+    useEffect(() => {
+        document.body.classList.toggle("menu-open", mobileMenuOpen);
+
+        return () => {
+            document.body.classList.remove("menu-open");
+        };
+    }, [mobileMenuOpen]);
 
     useEffect(() => {
         const resolveHeaderTone = () => {
@@ -77,30 +93,12 @@ export default function Header() {
     return (
         <header
             ref={headerRef}
-            className={`site-header ${scrolled ? "is-scrolled" : ""} ${desktopMenuOpen ? "site-header--desktop-menu-open" : ""}`}
-            style={scrolled ? ({
-                "--header-brand": headerTone === "light" ? "var(--color-dark-brown)" : "var(--color-white)",
-                "--header-nav": headerTone === "light" ? "var(--color-dark-brown)" : "var(--color-white)",
-            } as CSSProperties) : undefined}
+            className={`site-header ${scrolled ? "is-scrolled" : ""} ${desktopMenuOpen ? "site-header--desktop-menu-open" : ""} ${mobileMenuOpen ? "site-header--mobile-menu-open" : ""}`}
+            style={headerStyle}
         >
-            <GlassSurface
-                className={`site-header__chrome ${scrolled ? "site-header__chrome--visible" : ""}`}
-                width="100%"
-                height="100%"
-                borderRadius={0}
-                opacity={0.9}
-                brightness={66}
-                blur={10}
-                backgroundOpacity={0.06}
-                saturation={1.75}
-                distortionScale={-160}
-                redOffset={0}
-                greenOffset={8}
-                blueOffset={16}
-            />
-            <input className="mobile-menu-toggle" type="checkbox" id="mobile-menu-toggle"/>
+            <div className={`site-header__chrome ${scrolled ? "site-header__chrome--visible" : ""}`} aria-hidden="true" />
             <div className="site-header__content">
-                <a className={`wordmark ${scrolled ? "is-scrolled" : ""}`} href="#home" aria-label="Rebar home">
+                <a className="wordmark" href="#home" aria-label="Rebar home">
                     Rebar
                 </a>
                 <div className="desktop-actions">
@@ -126,24 +124,24 @@ export default function Header() {
                     </button>
                 </div>
             </div>
-            <label className={`menu-button ${scrolled ? "is-scrolled" : ""}`} htmlFor="mobile-menu-toggle"
-                   aria-label="Toggle navigation menu">
+            <button
+                type="button"
+                className="menu-button"
+                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+                onClick={() => setMobileMenuOpen((current) => !current)}
+            >
                 <span className="menu-button__icon" aria-hidden="true">
                     <span className="menu-button__icon-line menu-button__icon-line--top"/>
                     <span className="menu-button__icon-line menu-button__icon-line--middle"/>
                     <span className="menu-button__icon-line menu-button__icon-line--bottom"/>
                 </span>
-            </label>
-            <div className="mobile-menu" id="mobile-menu">
-                <div className="mobile-menu__top">
-                    <span className="mobile-menu__label">Navigation</span>
-                    <label className="mobile-menu__close" htmlFor="mobile-menu-toggle">
-                        Close
-                    </label>
-                </div>
+            </button>
+            <div className="mobile-menu" id="mobile-menu" aria-hidden={!mobileMenuOpen}>
                 <nav aria-label="Mobile navigation">
                     {navItems.map((item) => (
-                        <a key={item.href} href={item.href} data-menu-link>
+                        <a key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)}>
                             {item.label}
                         </a>
                     ))}
@@ -163,31 +161,14 @@ export default function Header() {
                     ))}
                 </nav>
             </div>
-      <script
-        type="module"
-        dangerouslySetInnerHTML={{
-          __html: `
-            const toggle = document.getElementById("mobile-menu-toggle");
-            const links = document.querySelectorAll("[data-menu-link]");
-            const syncBodyLock = () => {
-              document.body.classList.toggle("menu-open", Boolean(toggle && toggle.checked));
-            };
-
-            syncBodyLock();
-
-            if (toggle) {
-              toggle.addEventListener("change", syncBodyLock);
-            }
-
-            links.forEach((link) => {
-              link.addEventListener("click", () => {
-                if (toggle) toggle.checked = false;
-                syncBodyLock();
-              });
-            });
-          `,
-        }}
-      />
+            {desktopMenuOpen ? (
+                <button
+                    type="button"
+                    className="desktop-menu-backdrop"
+                    aria-label="Close navigation menu"
+                    onClick={() => setDesktopMenuOpen(false)}
+                />
+            ) : null}
         </header>
     );
 }
