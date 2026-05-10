@@ -78,7 +78,7 @@ const metrics = [
   </section>
 
   <section class="split-section" id="approach" data-header-tone="light">
-    <div class="split-background" aria-hidden="true"></div>
+    <div class="split-background" data-lazy-background aria-hidden="true"></div>
     <div class="split-content section-shell">
       <div class="reveal split-copy">
         <p class="eyebrow">One operating picture.</p>
@@ -147,7 +147,7 @@ const metrics = [
 
   <div class="closing-screen" data-header-tone="dark">
     <section class="contact-section dark-section" id="contact">
-      <div class="contact-background" aria-hidden="true"></div>
+      <div class="contact-background" data-lazy-background aria-hidden="true"></div>
       <div class="reveal section-shell contact-grid">
         <div>
           <p class="eyebrow">Contact Rebar</p>
@@ -174,6 +174,7 @@ const metrics = [
 
 <script>
   const revealItems = document.querySelectorAll<HTMLElement>(".reveal");
+  const lazyBackgrounds = document.querySelectorAll<HTMLElement>("[data-lazy-background]");
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     revealItems.forEach((item) => item.classList.add("is-visible"));
@@ -192,5 +193,22 @@ const metrics = [
     revealItems.forEach((item) => observer.observe(item));
   } else {
     revealItems.forEach((item) => item.classList.add("is-visible"));
+  }
+
+  if ("IntersectionObserver" in window) {
+    const backgroundObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-background-loaded");
+          backgroundObserver.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "500px 0px" },
+    );
+
+    lazyBackgrounds.forEach((item) => backgroundObserver.observe(item));
+  } else {
+    lazyBackgrounds.forEach((item) => item.classList.add("is-background-loaded"));
   }
 </script>

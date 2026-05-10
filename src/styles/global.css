@@ -6,8 +6,8 @@
     --color-rust: #f58559;
     --color-soft-rust: #f58559;
 
-    --font-display: "Newsreader", Georgia, serif;
-    --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --font-display: Georgia, "Times New Roman", serif;
+    --font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
     --content-width: 1180px;
 
@@ -657,10 +657,16 @@ h3 {
     position: absolute;
     inset: 0;
     z-index: 0;
-    background: linear-gradient(rgba(251, 250, 246, 0.42), rgba(251, 250, 246, 0.52)),
-    url("/approach-background.webp") center center / cover;
+    background: linear-gradient(rgba(251, 250, 246, 0.42), rgba(251, 250, 246, 0.52));
     background-attachment: fixed;
     mix-blend-mode: multiply;
+}
+
+.split-background.is-background-loaded {
+    background-image: linear-gradient(rgba(251, 250, 246, 0.42), rgba(251, 250, 246, 0.52)),
+    url("/approach-background.webp");
+    background-position: center center;
+    background-size: cover;
 }
 
 .split-copy,
@@ -808,9 +814,15 @@ h3 {
     position: absolute;
     inset: 0;
     z-index: 0;
-    background: linear-gradient(rgba(36, 31, 28, 0.28), rgba(36, 31, 28, 0.42)),
-    url("/contact-background.webp") center center / cover;
+    background: linear-gradient(rgba(36, 31, 28, 0.28), rgba(36, 31, 28, 0.42));
     background-attachment: fixed;
+}
+
+.contact-background.is-background-loaded {
+    background-image: linear-gradient(rgba(36, 31, 28, 0.28), rgba(36, 31, 28, 0.42)),
+    url("/contact-background.webp");
+    background-position: center center;
+    background-size: cover;
 }
 
 .contact-grid {
