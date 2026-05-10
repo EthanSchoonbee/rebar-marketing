@@ -1,0 +1,199 @@
+---
+const navItems = [
+  { label: "Home", href: "#home" },
+  { label: "Platform", href: "#platform" },
+  { label: "Approach", href: "#approach" },
+  { label: "Proof", href: "#proof" },
+  { label: "Contact", href: "#contact" },
+];
+
+const lastNavItemIndex = navItems.length - 1;
+---
+
+<header class="site-header" data-site-header>
+  <div class="site-header__chrome" aria-hidden="true"></div>
+  <div class="site-header__content">
+    <a class="wordmark" href="#home" aria-label="Rebar home">Rebar</a>
+    <div class="desktop-actions">
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        {
+          navItems.map((item, index) => (
+            <a
+              href={item.href}
+              style={`--nav-collapse-delay: ${(lastNavItemIndex - index) * 42}ms; --nav-expand-delay: ${
+                index * 34
+              }ms; --nav-collapse-distance: ${(lastNavItemIndex - index + 1) * 3.8}rem;`}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+      <button
+        type="button"
+        class="desktop-menu-button"
+        data-desktop-menu-button
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+        <span class="menu-button__icon" aria-hidden="true">
+          <span class="menu-button__icon-line menu-button__icon-line--top"></span>
+          <span class="menu-button__icon-line menu-button__icon-line--middle"></span>
+          <span class="menu-button__icon-line menu-button__icon-line--bottom"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+  <button
+    type="button"
+    class="menu-button"
+    data-mobile-menu-button
+    aria-label="Open navigation menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+  >
+    <span class="menu-button__icon" aria-hidden="true">
+      <span class="menu-button__icon-line menu-button__icon-line--top"></span>
+      <span class="menu-button__icon-line menu-button__icon-line--middle"></span>
+      <span class="menu-button__icon-line menu-button__icon-line--bottom"></span>
+    </span>
+  </button>
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav aria-label="Mobile navigation">
+      {
+        navItems.map((item, index) => (
+          <a
+            href={item.href}
+            style={`--menu-open-delay: ${index * 70}ms; --menu-close-delay: ${
+              (lastNavItemIndex - index) * 45
+            }ms;`}
+            data-mobile-menu-link
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+  <div class="desktop-menu-panel" data-desktop-menu-panel aria-hidden="true">
+    <nav aria-label="Expanded desktop navigation">
+      {
+        navItems.map((item, index) => (
+          <a
+            href={item.href}
+            style={`--menu-open-delay: ${index * 70}ms; --menu-close-delay: ${
+              (lastNavItemIndex - index) * 45
+            }ms;`}
+            data-desktop-menu-link
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+  <button
+    type="button"
+    class="desktop-menu-backdrop"
+    data-desktop-menu-backdrop
+    aria-label="Close navigation menu"
+    hidden
+  >
+  </button>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+
+  if (header) {
+    const MOBILE_NAV_WIDTH = 760;
+    const desktopMenuButton = header.querySelector<HTMLButtonElement>("[data-desktop-menu-button]");
+    const mobileMenuButton = header.querySelector<HTMLButtonElement>("[data-mobile-menu-button]");
+    const mobileMenu = header.querySelector<HTMLElement>("#mobile-menu");
+    const desktopMenuPanel = header.querySelector<HTMLElement>("[data-desktop-menu-panel]");
+    const desktopMenuBackdrop = header.querySelector<HTMLButtonElement>("[data-desktop-menu-backdrop]");
+    const desktopMenuLinks = header.querySelectorAll<HTMLAnchorElement>("[data-desktop-menu-link]");
+    const mobileMenuLinks = header.querySelectorAll<HTMLAnchorElement>("[data-mobile-menu-link]");
+    let scrolled = false;
+    let desktopMenuOpen = false;
+    let mobileMenuOpen = false;
+
+    const setDesktopMenuOpen = (open: boolean) => {
+      desktopMenuOpen = open;
+      header.classList.toggle("site-header--desktop-menu-open", open);
+      desktopMenuButton?.classList.toggle("is-open", open);
+      desktopMenuButton?.setAttribute("aria-expanded", String(open));
+      desktopMenuButton?.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+      desktopMenuPanel?.setAttribute("aria-hidden", String(!open));
+      if (desktopMenuBackdrop) desktopMenuBackdrop.hidden = !open;
+    };
+
+    const setMobileMenuOpen = (open: boolean) => {
+      mobileMenuOpen = open;
+      header.classList.toggle("site-header--mobile-menu-open", open);
+      document.body.classList.toggle("menu-open", open);
+      mobileMenuButton?.setAttribute("aria-expanded", String(open));
+      mobileMenuButton?.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+      mobileMenu?.setAttribute("aria-hidden", String(!open));
+    };
+
+    const resolveHeaderTone = () => {
+      const headerRect = header.getBoundingClientRect();
+      const wordmarkRect = header.querySelector(".wordmark")?.getBoundingClientRect();
+      const probeY = wordmarkRect
+        ? wordmarkRect.top + wordmarkRect.height / 2
+        : headerRect.top + Math.min(headerRect.height, 72) / 2;
+      const sections = document.querySelectorAll<HTMLElement>("[data-header-tone]");
+      let nextTone = "dark";
+
+      for (const section of sections) {
+        const tone = section.getAttribute("data-header-tone");
+        const rect = section.getBoundingClientRect();
+
+        if (probeY >= rect.top && probeY < rect.bottom) {
+          nextTone = tone === "light" ? "light" : "dark";
+          break;
+        }
+      }
+
+      const toneColor = nextTone === "light" ? "var(--color-dark-brown)" : "var(--color-white)";
+
+      if (scrolled) {
+        header.style.setProperty("--header-brand", toneColor);
+        header.style.setProperty("--header-nav", toneColor);
+      } else {
+        header.style.removeProperty("--header-brand");
+        header.style.removeProperty("--header-nav");
+      }
+    };
+
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const atBottom = window.scrollY + window.innerHeight >= doc.scrollHeight - 4;
+      scrolled = window.scrollY > 88 && !atBottom;
+      header.classList.toggle("is-scrolled", scrolled);
+      header.querySelector(".site-header__chrome")?.classList.toggle("site-header__chrome--visible", scrolled);
+
+      if (!scrolled && desktopMenuOpen) setDesktopMenuOpen(false);
+      resolveHeaderTone();
+    };
+
+    desktopMenuButton?.addEventListener("click", () => setDesktopMenuOpen(!desktopMenuOpen));
+    desktopMenuBackdrop?.addEventListener("click", () => setDesktopMenuOpen(false));
+    desktopMenuLinks.forEach((link) => link.addEventListener("click", () => setDesktopMenuOpen(false)));
+    mobileMenuButton?.addEventListener("click", () => setMobileMenuOpen(!mobileMenuOpen));
+    mobileMenuLinks.forEach((link) => link.addEventListener("click", () => setMobileMenuOpen(false)));
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= MOBILE_NAV_WIDTH) {
+        setDesktopMenuOpen(false);
+      } else {
+        setMobileMenuOpen(false);
+      }
+      resolveHeaderTone();
+    });
+
+    onScroll();
+  }
+</script>

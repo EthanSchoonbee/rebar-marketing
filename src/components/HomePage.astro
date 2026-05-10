@@ -1,0 +1,196 @@
+---
+import Header from "./Header.astro";
+
+const services = [
+  {
+    number: "01",
+    title: "Project command center",
+    description: "Bring schedules, RFIs, submittals, documents, and field notes into one operating view.",
+  },
+  {
+    number: "02",
+    title: "Cost and change control",
+    description: "Track exposure before it becomes a dispute, with clean ownership and decision history.",
+  },
+  {
+    number: "03",
+    title: "Field coordination",
+    description: "Keep crews, supers, and office teams aligned around the work happening today.",
+  },
+  {
+    number: "04",
+    title: "Executive visibility",
+    description: "Translate daily activity into the signals leaders need to protect margin and delivery.",
+  },
+];
+
+const metrics = [
+  { value: "14%", label: "Less time spent chasing updates" },
+  { value: "3.2x", label: "Faster decision turnaround" },
+  { value: "1", label: "Source for field and office truth" },
+  { value: "24/7", label: "Project context when details move" },
+];
+---
+
+<Header />
+<main id="home">
+  <section class="hero" data-header-tone="dark">
+    <div class="reveal hero-panel">
+      <div>
+        <p class="eyebrow">Construction clarity, always in view.</p>
+        <h1>Construction management made clear.</h1>
+      </div>
+      <div class="hero-copy">
+        <p>
+          Rebar gives construction teams a calmer way to manage schedules, costs, documents, and
+          field decisions before small misses become expensive surprises.
+        </p>
+        <a class="button button--primary" href="#contact">Start a conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-section dark-section" id="platform" data-header-tone="dark">
+    <div class="section-shell section-grid">
+      <div class="section-intro">
+        <div class="reveal reveal--strong">
+          <p class="eyebrow">What Rebar brings together.</p>
+          <p>
+            Sophisticated enough for complex builds. Simple enough for the daily coordination that
+            keeps work moving.
+          </p>
+        </div>
+      </div>
+      <div class="service-list">
+        {
+          services.map((service, index) => (
+            <div class="reveal reveal--strong" style={`--reveal-delay: ${index * 140}ms;`}>
+              <a class="service-row" href="#contact">
+                <span>{service.number}</span>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="split-section" id="approach" data-header-tone="light">
+    <div class="split-background" aria-hidden="true"></div>
+    <div class="split-content section-shell">
+      <div class="reveal split-copy">
+        <p class="eyebrow">One operating picture.</p>
+        <h2>Fewer handoffs. Faster answers. Better control.</h2>
+      </div>
+      <div class="reveal split-detail">
+        <p>
+          Construction teams do not need another place for information to disappear. Rebar connects
+          field reality with office commitments, so every open question has context, ownership, and a
+          visible path to resolution.
+        </p>
+        <a class="button button--ghost" href="#platform">See the platform</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="metrics-section" id="proof" data-header-tone="light">
+    <div class="reveal section-shell metrics-heading">
+      <p class="eyebrow">Proof in the process.</p>
+      <h2>Small signals that protect the whole build.</h2>
+    </div>
+    <div class="reveal section-shell metrics-grid">
+      {
+        metrics.map((metric) => (
+          <div class="metric-block">
+            <strong>{metric.value}</strong>
+            <span>{metric.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="testimonial-section section-shell" data-header-tone="light">
+    <div class="reveal">
+      <p class="eyebrow">Site leadership</p>
+      <blockquote>
+        Rebar gives our project team the one thing every complex build needs: the current truth.
+        Decisions are cleaner, meetings are shorter, and issues stop drifting.
+      </blockquote>
+      <cite>
+        <strong>Elena Marais</strong>
+        <span>Director of Delivery, Northline Projects</span>
+      </cite>
+    </div>
+  </section>
+
+  <section class="insights-section section-shell" data-header-tone="light">
+    <div class="reveal insights-copy">
+      <p class="eyebrow">Featured insight</p>
+      <h2>Practical guidance for decisions that move work forward.</h2>
+      <a class="button button--ghost" href="#contact">Talk to Rebar</a>
+    </div>
+    <div class="reveal insight-stack">
+      <article class="insight-minimal">
+        <p class="eyebrow">Field note</p>
+        <h3>Why the best project meetings start before the meeting.</h3>
+        <p>
+          A practical look at turning field updates, cost movement, and open decisions into
+          executive-ready clarity.
+        </p>
+        <a href="#contact">Read article</a>
+      </article>
+    </div>
+  </section>
+
+  <div class="closing-screen" data-header-tone="dark">
+    <section class="contact-section dark-section" id="contact">
+      <div class="contact-background" aria-hidden="true"></div>
+      <div class="reveal section-shell contact-grid">
+        <div>
+          <p class="eyebrow">Contact Rebar</p>
+          <h2>Every scope, every signal, one clear path.</h2>
+          <a class="button button--primary" href="mailto:hello@rebar.build">Contact us</a>
+        </div>
+      </div>
+    </section>
+    <footer class="site-footer">
+      <div class="site-footer__brand">
+        <h2>Hold the whole build in view.</h2>
+        <p>Rebar brings construction management into one calm operating picture.</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        <a href="#home">Home</a>
+        <a href="#platform">Platform</a>
+        <a href="#approach">Approach</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="site-footer__copyright">© 2026 Rebar</p>
+    </footer>
+  </div>
+</main>
+
+<script>
+  const revealItems = document.querySelectorAll<HTMLElement>(".reveal");
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+  } else if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.16 },
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+  } else {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+  }
+</script>
