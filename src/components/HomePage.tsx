@@ -40,7 +40,7 @@ export default function HomePage() {
     <>
       <Header />
       <main id="home">
-        <section className="hero">
+        <section className="hero" data-header-tone="dark">
           <Reveal className="hero-panel">
             <div>
               <SectionLabel>Construction clarity, always in view.</SectionLabel>
@@ -56,7 +56,7 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section className="services-section dark-section" id="platform">
+        <section className="services-section dark-section" id="platform" data-header-tone="dark">
           <div className="section-shell section-grid">
             <div className="section-intro">
               <Reveal className="reveal--strong">
@@ -77,7 +77,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="split-section" id="approach">
+        <section className="split-section" id="approach" data-header-tone="light">
           <div className="split-background" aria-hidden="true" />
           <Reveal className="split-copy">
             <SectionLabel>One operating picture.</SectionLabel>
@@ -95,7 +95,7 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section className="metrics-section" id="proof">
+        <section className="metrics-section" id="proof" data-header-tone="light">
           <Reveal className="section-shell metrics-heading">
             <SectionLabel>Proof in the process.</SectionLabel>
             <h2>Small signals that protect the whole build.</h2>
@@ -107,7 +107,7 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section className="testimonial-section section-shell">
+        <section className="testimonial-section section-shell" data-header-tone="light">
           <Reveal>
             <SectionLabel>Site leadership</SectionLabel>
             <blockquote>
@@ -121,7 +121,7 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section className="insights-section section-shell">
+        <section className="insights-section section-shell" data-header-tone="light">
           <Reveal className="insights-copy">
             <SectionLabel>Featured insight</SectionLabel>
             <h2>Practical guidance for decisions that move work forward.</h2>
@@ -142,7 +142,7 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section className="contact-section dark-section" id="contact">
+        <section className="contact-section dark-section" id="contact" data-header-tone="dark">
           <div className="contact-background" aria-hidden="true" />
           <Reveal className="section-shell contact-grid">
             <div>
